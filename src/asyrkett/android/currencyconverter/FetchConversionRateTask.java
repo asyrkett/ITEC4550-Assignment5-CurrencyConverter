@@ -25,6 +25,7 @@ public class FetchConversionRateTask extends AsyncTask<URL, String, Double> {
 	private TextView txtView;
 	private Gson gson;
 	private String toCurrency;
+	private String unavailableServiceMsg;
 
 	FetchConversionRateTask(TextView _t, double value) {
 		txtView = _t;
@@ -50,30 +51,53 @@ public class FetchConversionRateTask extends AsyncTask<URL, String, Double> {
 			Log.v(CONV_LOOKUP, "Host: " + url.getHost() + ", Path: " + url.getPath());
 			publishProgress("opening connection");
 			conn = (HttpURLConnection) url.openConnection();
-			InputStream in = new BufferedInputStream(conn.getInputStream());
-			// connect stream to scanner
-			scanner = new Scanner(in);
-			// process entire stream
-			while (scanner.hasNext()) jsonSB.append(scanner.nextLine());
-            Log.v(CONV_LOOKUP, "Response(" + conn.getResponseCode() +
-            		"):" + conn.getResponseMessage());
-            publishProgress(conn.getResponseCode() + conn.getResponseMessage());
-            
-            //handle non-200 errors
-            if (conn.getResponseCode() != 200)
+			
+			if (conn.getResponseCode() != 200)
             {
             	Log.v(CONV_LOOKUP, "" + conn.getResponseCode());
             	if (url.getHost().equals(MainActivity.CONV_HOST_APPSPOT))
-            		txtView.setText("Google Appspot's rate exchange is not available at the moment. Try Herokuapp.");
+            		unavailableServiceMsg = "Google Appspot's rate exchange is not available at the moment. Try Techunits Herokuapp.";
             	else
-            		txtView.setText("Herokuapp's rate exchange is not available at the moment. Try Google Appspot.");
-            	return Double.valueOf(-1.0D);
+            		unavailableServiceMsg = "Techunits Herokuapp's rate exchange is not available at the moment. Try Google Appspot.";
+            	throw new WebServiceUnavailableException("Response(" + conn.getResponseCode() +
+                		"):" + conn.getResponseMessage());
             }
+			
+			InputStream in = new BufferedInputStream(conn.getInputStream());
+			// connect stream to scanner
+			
+			
+			Log.v(CONV_LOOKUP, "3");
+			scanner = new Scanner(in);
+			// process entire stream
+			
+			Log.v(CONV_LOOKUP, "4");
+			while (scanner.hasNext()) jsonSB.append(scanner.nextLine());
+            Log.v(CONV_LOOKUP, "Response(" + conn.getResponseCode() +
+            		"):" + conn.getResponseMessage());
             
-		} catch (IOException e) {
+            publishProgress(conn.getResponseCode() + conn.getResponseMessage());
+            
+            //handle non-200 errors
+            
+            
+		}
+		catch (IOException e)
+		{
 			Log.e(CONV_LOOKUP, e.getMessage());
 			return Double.valueOf(-1.0D);
-		} finally {
+		}
+		catch (WebServiceUnavailableException e)
+		{
+			Log.e(CONV_LOOKUP, e.getMessage());
+			return Double.valueOf(-1.0D);
+		}
+		catch (Exception e)
+		{
+			Log.e(CONV_LOOKUP, e.getMessage());
+			return Double.valueOf(-1.0D);
+		}
+		finally {
 			if (scanner != null) scanner.close();
 			if (conn != null)conn.disconnect();
 		}
@@ -118,7 +142,10 @@ public class FetchConversionRateTask extends AsyncTask<URL, String, Double> {
     	// set the contents of TextView to the double retrieved in doInBackground
     	
     	if (rate == -1.0D)
+    	{
+    		txtView.setText(unavailableServiceMsg);
     		return;
+    	}
     	
     	DecimalFormat currencyFormat = new DecimalFormat(CONV_FMT);
     	DecimalFormat rateFormat = new DecimalFormat(RATE_FMT);

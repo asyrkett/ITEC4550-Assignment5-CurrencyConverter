@@ -95,10 +95,9 @@
 
     <RadioGroup
         android:id="@+id/radioGroup1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
@@ -106,17 +105,17 @@
             android:id="@+id/radAppspot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
             android:checked="true"
+            android:layout_weight="0.50"
+            android:gravity="center"
             android:text="@string/rad_google_appspot" />
 
         <RadioButton
             android:id="@+id/radHerokuapp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
+            android:layout_weight="0.50"
+            android:gravity="center"
             android:text="@string/rad_herokuapp" />
 
     </RadioGroup>

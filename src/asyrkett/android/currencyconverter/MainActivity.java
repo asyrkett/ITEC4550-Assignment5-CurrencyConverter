@@ -43,6 +43,8 @@ public class MainActivity extends Activity
 		final Spinner toCurrency = (Spinner) findViewById(R.id.spinTo);
 		final RadioButton radAppspot = (RadioButton) findViewById(R.id.radAppspot);
 
+		toCurrency.setSelection(2);
+		
 		button.setOnClickListener(new OnClickListener()
 		{
 

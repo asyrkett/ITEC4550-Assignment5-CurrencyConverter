@@ -22,7 +22,7 @@
     <string name="txt_value_hint">Value</string>
     <string name="converting">…converting…</string>
     <string name="website">Choose a website to query:</string>
-    <string name="rad_google_appspot">Google Appspot</string>
-    <string name="rad_herokuapp">Herokuapp</string>
+    <string name="rad_google_appspot">Google\nAppspot</string>
+    <string name="rad_herokuapp">Techunits\nHerokuapp</string>
 
 </resources>
