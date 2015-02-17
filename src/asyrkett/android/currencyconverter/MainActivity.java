@@ -42,8 +42,7 @@ public class MainActivity extends Activity
 		final Spinner fromCurrency = (Spinner) findViewById(R.id.spinFrom);
 		final Spinner toCurrency = (Spinner) findViewById(R.id.spinTo);
 		final RadioButton radAppspot = (RadioButton) findViewById(R.id.radAppspot);
-
-		toCurrency.setSelection(2);
+		toCurrency.setSelection(2); //automatically select the third item in the spinner (2nd index)
 		
 		button.setOnClickListener(new OnClickListener()
 		{
@@ -55,8 +54,8 @@ public class MainActivity extends Activity
 				if (enteredValue.getText().toString().length() == 0
 						|| Double.parseDouble(enteredValue.getText().toString()) == 0)
 				{
-					Toast.makeText(getApplicationContext(),
-							"Please enter a valid value to convert",
+					Toast.makeText(MainActivity.this,
+							getString(R.string.valid_value),
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
@@ -67,11 +66,9 @@ public class MainActivity extends Activity
 
 				if (fromCurrency.getSelectedItemId() == toCurrency.getSelectedItemId())
 				{
-					Toast.makeText(
-							getApplicationContext(),
-							"Your \"From\" and \"To\" currencies are the same."
-									+ "\nPlease select different currencies to convert.",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(MainActivity.this,
+							getString(R.string.same_currencies),
+							Toast.LENGTH_LONG).show();
 					return;
 				}
 				else
@@ -97,14 +94,14 @@ public class MainActivity extends Activity
 				{
 					Log.e(CONV_LOOKUP, e.getMessage());
 					Toast.makeText(MainActivity.this, 
-							"Unable to retrieve conversion rate, exception="
+							getString(R.string.malformed_exception)
 							+ e.getMessage(), Toast.LENGTH_LONG).show();
 				}
 				catch (Exception e)
 				{
 					Log.e(CONV_LOOKUP, e.getMessage());
 					Toast.makeText(MainActivity.this,
-							"Unknown exception=" + e.getMessage(), Toast.LENGTH_LONG).show();
+							getString(R.string.unknown_exception) + e.getMessage(), Toast.LENGTH_LONG).show();
 				}
 			}
 		});

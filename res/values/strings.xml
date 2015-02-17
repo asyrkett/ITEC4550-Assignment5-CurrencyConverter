@@ -21,8 +21,12 @@
     <string name="btn_convert">Convert</string>
     <string name="txt_value_hint">Value</string>
     <string name="converting">…converting…</string>
-    <string name="website">Choose a website to query:</string>
+    <string name="website">Choose a web service to query:</string>
     <string name="rad_google_appspot">Google\nAppspot</string>
     <string name="rad_herokuapp">Techunits\nHerokuapp</string>
+    <string name="unknown_exception">Unknown exception=</string>
+    <string name="malformed_exception">Unable to retrieve conversion rate, exception=</string>
+    <string name="valid_value">Please enter a valid value to convert</string>
+    <string name="same_currencies">Your From/To currencies are the same.\nPlease select 2 different currencies to convert.</string>
 
 </resources>

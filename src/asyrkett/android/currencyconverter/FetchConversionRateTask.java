@@ -59,35 +59,22 @@ public class FetchConversionRateTask extends AsyncTask<URL, String, Double> {
             		unavailableServiceMsg = "Google Appspot's rate exchange is not available at the moment. Try Techunits Herokuapp.";
             	else
             		unavailableServiceMsg = "Techunits Herokuapp's rate exchange is not available at the moment. Try Google Appspot.";
-            	throw new WebServiceUnavailableException("Response(" + conn.getResponseCode() +
+            	
+            	throw new IOException("Response(" + conn.getResponseCode() +
                 		"):" + conn.getResponseMessage());
             }
 			
 			InputStream in = new BufferedInputStream(conn.getInputStream());
 			// connect stream to scanner
-			
-			
-			Log.v(CONV_LOOKUP, "3");
 			scanner = new Scanner(in);
 			// process entire stream
-			
-			Log.v(CONV_LOOKUP, "4");
 			while (scanner.hasNext()) jsonSB.append(scanner.nextLine());
             Log.v(CONV_LOOKUP, "Response(" + conn.getResponseCode() +
             		"):" + conn.getResponseMessage());
             
             publishProgress(conn.getResponseCode() + conn.getResponseMessage());
-            
-            //handle non-200 errors
-            
-            
 		}
 		catch (IOException e)
-		{
-			Log.e(CONV_LOOKUP, e.getMessage());
-			return Double.valueOf(-1.0D);
-		}
-		catch (WebServiceUnavailableException e)
 		{
 			Log.e(CONV_LOOKUP, e.getMessage());
 			return Double.valueOf(-1.0D);
@@ -126,6 +113,7 @@ public class FetchConversionRateTask extends AsyncTask<URL, String, Double> {
 		}
 		catch (Exception e)
 		{
+			toCurrency = "";
 			Log.e(CONV_LOOKUP, e.getMessage());
 		}
 		
