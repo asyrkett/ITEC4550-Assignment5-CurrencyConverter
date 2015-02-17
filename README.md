@@ -1,0 +1,4 @@
+# ITEC4550-Assignment5-CurrencyConverter
+An android app that fetches currency exchange rates from a web service and converts a value entered by the user.
+
+The Current Currency Converter application allows users to convert a value from one currency to another from a selection of five different currencies: USD (U.S. Dollar), EUR (Euro), JPY (Japanese Yen), BRL (Brazilian Real), and DKK (Danish Krone). The app gets the up-to-date exchange rates between the currencies from a RESTful web service, which the user can choose from Google Appspot (rate-exchange.appspot.com) or Techunits Herokuapp (rate-exchange.herokuapp.com), and then displays the converted value based on this rate. It notifies the user through a Toast message if they do not enter a value or if they enter a 0, as well as when they try to convert between equivalent currencies, and if the rate exchange service succeeded.
